@@ -77,7 +77,7 @@ const MainLayout = ({ children, user, onLogout }) => {
           </div>
 
           {/* Menu */}
-          <nav className="flex-1 p-4 space-y-2">
+          <nav className="flex-1 p-3 lg:p-4 space-y-2 overflow-y-auto">
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -87,7 +87,7 @@ const MainLayout = ({ children, user, onLogout }) => {
                   to={item.path}
                   data-testid={`menu-${item.label.toLowerCase()}`}
                   onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  className={`flex items-center gap-3 px-4 py-3.5 lg:py-3 rounded-xl transition-all text-base lg:text-sm ${
                     isActive
                       ? 'bg-gradient-to-r from-cyan-400/20 to-blue-500/20 text-cyan-400 border border-cyan-400/30'
                       : 'text-gray-400 hover:bg-[#0f1419] hover:text-gray-300'
@@ -96,7 +96,7 @@ const MainLayout = ({ children, user, onLogout }) => {
                   <Icon className="w-5 h-5" />
                   <span className="font-medium">{item.label}</span>
                   {item.label === 'Dashboard' && notifications.length > 0 && (
-                    <Badge className="ml-auto bg-red-500 text-white">{notifications.length}</Badge>
+                    <Badge className="ml-auto bg-red-500 text-white text-xs">{notifications.length}</Badge>
                   )}
                 </Link>
               );
