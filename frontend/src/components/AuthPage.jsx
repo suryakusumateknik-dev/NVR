@@ -38,12 +38,12 @@ const AuthPage = ({ onLogin }) => {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-block relative mb-4">
-            <div className="absolute inset-0 bg-cyan-400 blur-2xl opacity-20"></div>
-            <div className="relative bg-gradient-to-br from-cyan-400 to-blue-500 p-4 rounded-2xl">
-              <Video className="w-12 h-12 text-[#0a0f1a]" />
+            <div className="absolute inset-0 blur-2xl opacity-20 theme-bg"></div>
+            <div className="relative theme-gradient p-4 rounded-2xl">
+              <Video className="w-12 h-12" style={{ color: 'var(--theme-bg)' }} />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+          <h1 className="text-4xl font-bold gradient-text" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
             NVR CCTV System
           </h1>
           <p className="text-gray-400 mt-2">Professional Surveillance Management</p>
