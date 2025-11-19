@@ -139,21 +139,35 @@ const MainLayout = ({ children, user, onLogout }) => {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
         <header className="bg-[#1a1d23]/80 backdrop-blur-xl border-b border-cyan-500/20 sticky top-0 z-30">
-          <div className="px-4 lg:px-8 py-4 flex items-center justify-between">
-            <button
-              className="lg:hidden text-gray-400 hover:text-white"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-            >
-              {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+          <div className="px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button
+                className="lg:hidden text-gray-400 hover:text-white p-2 -ml-2"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+              
+              {/* Mobile Logo */}
+              <div className="lg:hidden flex items-center gap-2">
+                <div className="bg-gradient-to-br from-cyan-400 to-blue-500 p-1.5 rounded-lg">
+                  {settings?.app_logo ? (
+                    <img src={`${process.env.REACT_APP_BACKEND_URL}${settings.app_logo}`} alt="Logo" className="w-6 h-6 object-contain" />
+                  ) : (
+                    <Video className="w-6 h-6 text-[#0a0f1a]" />
+                  )}
+                </div>
+                <span className="text-cyan-400 font-bold text-base" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                  {settings?.app_name?.split(' ')[0] || 'NVR'}
+                </span>
+              </div>
+            </div>
 
-            <div className="flex-1 lg:flex-none" />
-
-            <div className="flex items-center gap-4">
-              <button className="relative text-gray-400 hover:text-white transition-colors">
-                <Bell className="w-6 h-6" />
+            <div className="flex items-center gap-3 lg:gap-4">
+              <button className="relative text-gray-400 hover:text-white transition-colors p-2">
+                <Bell className="w-5 h-5 lg:w-6 lg:h-6" />
                 {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
+                  <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-semibold">
                     {notifications.length}
                   </span>
                 )}
