@@ -105,12 +105,12 @@ const MainLayout = ({ children, user, onLogout }) => {
 
           {/* User */}
           <div className="p-4 border-t border-cyan-500/20">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-[#0a0f1a] font-bold">
+            <div className="flex items-center gap-3 mb-3 lg:mb-3">
+              <div className="w-11 h-11 lg:w-10 lg:h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-[#0a0f1a] font-bold text-base lg:text-sm">
                 {user?.username?.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-white font-medium truncate">{user?.username}</div>
+                <div className="text-white font-medium truncate text-base lg:text-sm">{user?.username}</div>
                 <div className="text-gray-400 text-sm truncate">{user?.email}</div>
               </div>
             </div>
@@ -118,7 +118,7 @@ const MainLayout = ({ children, user, onLogout }) => {
               data-testid="logout-button"
               onClick={onLogout}
               variant="outline"
-              className="w-full border-red-500/50 text-red-400 hover:bg-red-500/10 hover:border-red-500"
+              className="w-full border-red-500/50 text-red-400 hover:bg-red-500/10 hover:border-red-500 h-11 lg:h-10 text-base lg:text-sm"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
