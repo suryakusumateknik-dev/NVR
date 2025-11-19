@@ -92,13 +92,13 @@ const SplashScreen = ({ onComplete }) => {
         <div className="w-80 mx-auto space-y-3">
           <div className="relative h-2 bg-gray-800 rounded-full overflow-hidden shadow-inner">
             <div
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transition-all duration-300 ease-out shadow-lg"
+              className="absolute inset-y-0 left-0 theme-gradient rounded-full transition-all duration-300 ease-out shadow-lg"
               style={{ width: `${progress}%` }}
             >
               <div className="absolute inset-0 bg-white opacity-30 animate-pulse"></div>
             </div>
           </div>
-          <div className="text-center text-cyan-400 text-2xl font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+          <div className="text-center theme-text text-2xl font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
             {Math.round(progress)}%
           </div>
         </div>
