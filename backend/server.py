@@ -532,8 +532,9 @@ async def delete_recording(recording_id: str, user_id: str = Depends(get_current
 
 # ============= SETTINGS ROUTES =============
 
-@api_router.get("/settings", response_model=AppSettings)
-async def get_settings(user_id: str = Depends(get_current_user)):
+@api_router.get("/settings")
+async def get_settings():
+    # Allow public access to settings for splash screen
     settings = await db.settings.find_one({"id": "app_settings"}, {"_id": 0})
     if not settings:
         # Create default settings
@@ -541,9 +542,9 @@ async def get_settings(user_id: str = Depends(get_current_user)):
         doc = default_settings.model_dump()
         doc['updated_at'] = doc['updated_at'].isoformat()
         await db.settings.insert_one(doc)
-        return default_settings
+        return doc
 
-    if isinstance(settings['updated_at'], str):
+    if isinstance(settings.get('updated_at'), str):
         settings['updated_at'] = datetime.fromisoformat(settings['updated_at'])
 
     return settings
