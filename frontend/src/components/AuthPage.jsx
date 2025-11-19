@@ -105,7 +105,8 @@ const AuthPage = ({ onLogin }) => {
               data-testid="auth-submit-button"
               type="submit"
               disabled={loading}
-              className="w-full h-12 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-[#0a0f1a] font-semibold rounded-xl shadow-lg"
+              className="w-full h-12 theme-gradient font-semibold rounded-xl shadow-lg"
+              style={{ color: 'var(--theme-bg)' }}
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
