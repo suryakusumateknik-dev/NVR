@@ -168,14 +168,14 @@ const MainLayout = ({ children, user, onLogout }) => {
               
               {/* Mobile Logo */}
               <div className="lg:hidden flex items-center gap-2">
-                <div className="bg-gradient-to-br from-cyan-400 to-blue-500 p-1.5 rounded-lg">
+                <div className="theme-gradient p-1.5 rounded-lg">
                   {settings?.app_logo ? (
                     <img src={`${process.env.REACT_APP_BACKEND_URL}${settings.app_logo}`} alt="Logo" className="w-6 h-6 object-contain" />
                   ) : (
-                    <Video className="w-6 h-6 text-[#0a0f1a]" />
+                    <Video className="w-6 h-6" style={{ color: 'var(--theme-bg)' }} />
                   )}
                 </div>
-                <span className="text-cyan-400 font-bold text-base" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                <span className="theme-text font-bold text-base" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                   {settings?.app_name?.split(' ')[0] || 'NVR'}
                 </span>
               </div>
