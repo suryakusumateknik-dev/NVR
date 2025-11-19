@@ -1,50 +1,156 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import '@/App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import SplashScreen from './components/SplashScreen';
+import AuthPage from './components/AuthPage';
+import Dashboard from './components/Dashboard';
+import CameraManagement from './components/CameraManagement';
+import Recordings from './components/Recordings';
+import Settings from './components/Settings';
+import MainLayout from './components/MainLayout';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
-  const helloWorldApi = async () => {
+// Create axios instance with auth
+const api = axios.create({
+  baseURL: API,
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+function App() {
+  const [showSplash, setShowSplash] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check authentication
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await api.get('/auth/me');
+          setUser(response.data);
+          setIsAuthenticated(true);
+        } catch (error) {
+          localStorage.removeItem('token');
+          setIsAuthenticated(false);
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, []);
+
+  const handleLogin = async (email, password) => {
     try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+      const response = await axios.post(`${API}/auth/login`, { email, password });
+      localStorage.setItem('token', response.data.token);
+      setUser(response.data.user);
+      setIsAuthenticated(true);
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.response?.data?.detail || 'Login failed' };
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+  const handleRegister = async (username, email, password) => {
+    try {
+      await axios.post(`${API}/auth/register`, { username, email, password });
+      return await handleLogin(email, password);
+    } catch (error) {
+      return { success: false, error: error.response?.data?.detail || 'Registration failed' };
+    }
+  };
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    setUser(null);
+  };
 
-function App() {
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+
+  if (loading) {
+    return <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center">
+      <div className="text-cyan-400 text-xl">Loading...</div>
+    </div>;
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          <Route
+            path="/auth"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/" replace />
+              ) : (
+                <AuthPage onLogin={handleLogin} onRegister={handleRegister} />
+              )
+            }
+          />
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <MainLayout user={user} onLogout={handleLogout}>
+                  <Dashboard api={api} />
+                </MainLayout>
+              ) : (
+                <Navigate to="/auth" replace />
+              )
+            }
+          />
+          <Route
+            path="/cameras"
+            element={
+              isAuthenticated ? (
+                <MainLayout user={user} onLogout={handleLogout}>
+                  <CameraManagement api={api} />
+                </MainLayout>
+              ) : (
+                <Navigate to="/auth" replace />
+              )
+            }
+          />
+          <Route
+            path="/recordings"
+            element={
+              isAuthenticated ? (
+                <MainLayout user={user} onLogout={handleLogout}>
+                  <Recordings api={api} />
+                </MainLayout>
+              ) : (
+                <Navigate to="/auth" replace />
+              )
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              isAuthenticated ? (
+                <MainLayout user={user} onLogout={handleLogout}>
+                  <Settings api={api} />
+                </MainLayout>
+              ) : (
+                <Navigate to="/auth" replace />
+              )
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
@@ -52,3 +158,4 @@ function App() {
 }
 
 export default App;
+export { api };
