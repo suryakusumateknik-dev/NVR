@@ -270,6 +270,35 @@ async def get_me(user_id: str = Depends(get_current_user)):
 
     return UserResponse(**user_doc)
 
+# ============= USER MANAGEMENT ROUTES =============
+
+@api_router.get("/users/all", response_model=List[UserResponse])
+async def get_all_users(user_id: str = Depends(get_current_user)):
+    users = await db.users.find({}, {"_id": 0, "password_hash": 0}).to_list(1000)
+    
+    for user in users:
+        if isinstance(user['created_at'], str):
+            user['created_at'] = datetime.fromisoformat(user['created_at'])
+    
+    return users
+
+@api_router.delete("/users/{delete_user_id}")
+async def delete_user(delete_user_id: str, user_id: str = Depends(get_current_user)):
+    # Prevent deleting yourself
+    if delete_user_id == user_id:
+        raise HTTPException(status_code=400, detail="Cannot delete your own account")
+    
+    result = await db.users.delete_one({"id": delete_user_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Delete user's cameras and recordings
+    await db.cameras.delete_many({"user_id": delete_user_id})
+    await db.recordings.delete_many({"user_id": delete_user_id})
+    await db.notifications.delete_many({"user_id": delete_user_id})
+    
+    return {"message": "User deleted successfully"}
+
 # ============= CAMERA ROUTES =============
 
 @api_router.get("/cameras", response_model=List[Camera])
