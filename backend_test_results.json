@@ -1,0 +1,92 @@
+{
+  "timestamp": "2025-11-19T06:11:26.094267",
+  "total_tests": 14,
+  "passed_tests": 14,
+  "success_rate": 100.0,
+  "test_details": [
+    {
+      "test": "User Registration",
+      "success": true,
+      "details": "User ID: 49cb92b7-d2bb-4475-ac2e-47a0e922edae",
+      "error": ""
+    },
+    {
+      "test": "User Login",
+      "success": true,
+      "details": "Token received, User: testuser_1763532682",
+      "error": ""
+    },
+    {
+      "test": "Get Current User",
+      "success": true,
+      "details": "User: testuser_1763532682",
+      "error": ""
+    },
+    {
+      "test": "Create Camera",
+      "success": true,
+      "details": "Camera ID: 59cf8ee9-62d4-4fd1-a220-798deffd9d2b",
+      "error": ""
+    },
+    {
+      "test": "Get Cameras",
+      "success": true,
+      "details": "Found 1 cameras",
+      "error": ""
+    },
+    {
+      "test": "Get Single Camera",
+      "success": true,
+      "details": "",
+      "error": ""
+    },
+    {
+      "test": "Update Camera",
+      "success": true,
+      "details": "",
+      "error": ""
+    },
+    {
+      "test": "Delete Camera",
+      "success": true,
+      "details": "",
+      "error": ""
+    },
+    {
+      "test": "Get Recordings",
+      "success": true,
+      "details": "Found 0 recordings",
+      "error": ""
+    },
+    {
+      "test": "Start Recording",
+      "success": true,
+      "details": "",
+      "error": ""
+    },
+    {
+      "test": "Stop Recording",
+      "success": true,
+      "details": "",
+      "error": ""
+    },
+    {
+      "test": "Get Settings",
+      "success": true,
+      "details": "App name: NVR CCTV System",
+      "error": ""
+    },
+    {
+      "test": "Update Settings",
+      "success": true,
+      "details": "",
+      "error": ""
+    },
+    {
+      "test": "Get Notifications",
+      "success": true,
+      "details": "Found 2 notifications",
+      "error": ""
+    }
+  ]
+}
