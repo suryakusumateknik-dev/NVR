@@ -45,26 +45,34 @@ const MainLayout = ({ children, user, onLogout }) => {
     <div className="min-h-screen bg-[#0a0f1a] flex">
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#1a1d23] border-r border-cyan-500/20 transform transition-transform duration-300 lg:transform-none ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-72 lg:w-64 bg-[#1a1d23] border-r border-cyan-500/20 transform transition-transform duration-300 lg:transform-none ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="p-6 border-b border-cyan-500/20">
-            <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-cyan-400 to-blue-500 p-2 rounded-xl">
-                {settings?.app_logo ? (
-                  <img src={`${process.env.REACT_APP_BACKEND_URL}${settings.app_logo}`} alt="Logo" className="w-8 h-8 object-contain" />
-                ) : (
-                  <Video className="w-8 h-8 text-[#0a0f1a]" />
-                )}
+          <div className="p-4 lg:p-6 border-b border-cyan-500/20">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="bg-gradient-to-br from-cyan-400 to-blue-500 p-2 rounded-xl">
+                  {settings?.app_logo ? (
+                    <img src={`${process.env.REACT_APP_BACKEND_URL}${settings.app_logo}`} alt="Logo" className="w-7 h-7 lg:w-8 lg:h-8 object-contain" />
+                  ) : (
+                    <Video className="w-7 h-7 lg:w-8 lg:h-8 text-[#0a0f1a]" />
+                  )}
+                </div>
+                <div>
+                  <h1 className="text-lg lg:text-xl font-bold text-cyan-400" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                    {settings?.app_name || 'NVR CCTV'}
+                  </h1>
+                </div>
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-cyan-400" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                  {settings?.app_name || 'NVR CCTV'}
-                </h1>
-              </div>
+              <button
+                className="lg:hidden text-gray-400 hover:text-white p-2"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <X className="w-6 h-6" />
+              </button>
             </div>
           </div>
 
