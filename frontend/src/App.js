@@ -64,15 +64,6 @@ function App() {
     }
   };
 
-  const handleRegister = async (username, email, password) => {
-    try {
-      await axios.post(`${API}/auth/register`, { username, email, password });
-      return await handleLogin(email, password);
-    } catch (error) {
-      return { success: false, error: error.response?.data?.detail || 'Registration failed' };
-    }
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
@@ -99,7 +90,7 @@ function App() {
               isAuthenticated ? (
                 <Navigate to="/" replace />
               ) : (
-                <AuthPage onLogin={handleLogin} onRegister={handleRegister} />
+                <AuthPage onLogin={handleLogin} />
               )
             }
           />
@@ -144,7 +135,7 @@ function App() {
             element={
               isAuthenticated ? (
                 <MainLayout user={user} onLogout={handleLogout}>
-                  <Settings api={api} />
+                  <Settings api={api} user={user} />
                 </MainLayout>
               ) : (
                 <Navigate to="/auth" replace />

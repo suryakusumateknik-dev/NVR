@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { Video, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Video, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { toast } from 'sonner';
 
-const AuthPage = ({ onLogin, onRegister }) => {
-  const [isLogin, setIsLogin] = useState(true);
+const AuthPage = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: '',
   });
@@ -20,15 +18,10 @@ const AuthPage = ({ onLogin, onRegister }) => {
     setLoading(true);
 
     try {
-      let result;
-      if (isLogin) {
-        result = await onLogin(formData.email, formData.password);
-      } else {
-        result = await onRegister(formData.username, formData.email, formData.password);
-      }
+      const result = await onLogin(formData.email, formData.password);
 
       if (result.success) {
-        toast.success(isLogin ? 'Login successful!' : 'Registration successful!');
+        toast.success('Login successful!');
       } else {
         toast.error(result.error);
       }
@@ -56,55 +49,13 @@ const AuthPage = ({ onLogin, onRegister }) => {
           <p className="text-gray-400 mt-2">Professional Surveillance Management</p>
         </div>
 
-        {/* Auth Form */}
+        {/* Login Form */}
         <div className="bg-[#1a1d23]/80 backdrop-blur-xl rounded-2xl border border-cyan-500/20 shadow-2xl p-8">
-          <div className="flex gap-4 mb-6">
-            <button
-              data-testid="login-tab-button"
-              onClick={() => setIsLogin(true)}
-              className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
-                isLogin
-                  ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-[#0a0f1a] shadow-lg'
-                  : 'bg-[#0f1419] text-gray-400 hover:text-gray-300'
-              }`}
-            >
-              Login
-            </button>
-            <button
-              data-testid="register-tab-button"
-              onClick={() => setIsLogin(false)}
-              className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
-                !isLogin
-                  ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-[#0a0f1a] shadow-lg'
-                  : 'bg-[#0f1419] text-gray-400 hover:text-gray-300'
-              }`}
-            >
-              Register
-            </button>
-          </div>
+          <h2 className="text-2xl font-bold text-white mb-6 text-center" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+            Sign In
+          </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {!isLogin && (
-              <div>
-                <Label htmlFor="username" className="text-gray-300 mb-2 block">
-                  Username
-                </Label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
-                  <Input
-                    id="username"
-                    data-testid="username-input"
-                    type="text"
-                    placeholder="Enter your username"
-                    value={formData.username}
-                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                    className="pl-11 bg-[#0f1419] border-gray-700 focus:border-cyan-400 text-white h-12 rounded-xl"
-                    required={!isLogin}
-                  />
-                </div>
-              </div>
-            )}
-
             <div>
               <Label htmlFor="email" className="text-gray-300 mb-2 block">
                 Email
@@ -156,7 +107,7 @@ const AuthPage = ({ onLogin, onRegister }) => {
               disabled={loading}
               className="w-full h-12 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-[#0a0f1a] font-semibold rounded-xl shadow-lg"
             >
-              {loading ? 'Processing...' : isLogin ? 'Login' : 'Register'}
+              {loading ? 'Signing in...' : 'Sign In'}
             </Button>
           </form>
         </div>
