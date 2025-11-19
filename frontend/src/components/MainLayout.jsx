@@ -12,6 +12,24 @@ const MainLayout = ({ children, user, onLogout }) => {
   const [settings, setSettings] = useState(null);
 
   useEffect(() => {
+    // Load theme on mount
+    const savedTheme = localStorage.getItem('app_theme') || 'cyan';
+    const themes = {
+      cyan: { primary: '#06b6d4', secondary: '#0891b2', bg: '#0a0f1a' },
+      purple: { primary: '#a855f7', secondary: '#9333ea', bg: '#0f0a1a' },
+      green: { primary: '#10b981', secondary: '#059669', bg: '#0a1a0f' },
+      orange: { primary: '#f97316', secondary: '#ea580c', bg: '#1a0f0a' },
+      pink: { primary: '#ec4899', secondary: '#db2777', bg: '#1a0a14' },
+      blue: { primary: '#3b82f6', secondary: '#2563eb', bg: '#0a0f1a' },
+    };
+    
+    const theme = themes[savedTheme];
+    if (theme) {
+      document.documentElement.style.setProperty('--theme-primary', theme.primary);
+      document.documentElement.style.setProperty('--theme-secondary', theme.secondary);
+      document.documentElement.style.setProperty('--theme-bg', theme.bg);
+    }
+
     fetchNotifications();
     fetchSettings();
   }, []);
