@@ -72,15 +72,15 @@ const MainLayout = ({ children, user, onLogout }) => {
           <div className="p-4 lg:p-6 border-b border-cyan-500/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-gradient-to-br from-cyan-400 to-blue-500 p-2 rounded-xl">
+                <div className="theme-gradient p-2 rounded-xl">
                   {settings?.app_logo ? (
                     <img src={`${process.env.REACT_APP_BACKEND_URL}${settings.app_logo}`} alt="Logo" className="w-7 h-7 lg:w-8 lg:h-8 object-contain" />
                   ) : (
-                    <Video className="w-7 h-7 lg:w-8 lg:h-8 text-[#0a0f1a]" />
+                    <Video className="w-7 h-7 lg:w-8 lg:h-8" style={{ color: 'var(--theme-bg)' }} />
                   )}
                 </div>
                 <div>
-                  <h1 className="text-lg lg:text-xl font-bold text-cyan-400" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                  <h1 className="text-lg lg:text-xl font-bold theme-text" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                     {settings?.app_name || 'NVR CCTV'}
                   </h1>
                 </div>
